@@ -1,0 +1,138 @@
+if(typeof (Storage) !== "undefined")
+{
+
+    var projectMap = {};
+    var taskList = [];
+
+    function loadData()
+    {
+        //get data from local storage
+        projectMap = localStorage.getItem("projectMap");
+
+
+        for(var i=0; i < Object.keys(projectMap).length; i++)
+        {
+
+            var projectSelect = document.getElementById("projectSelect");
+            var option = document.createElement("option");
+            option.text = projectMap[i];
+            projectSelect.add(option);
+            $('select').material_select();
+        }
+
+
+    }
+
+
+
+
+
+    $(document).ready(function()
+    {
+
+
+
+        $('#projectSelect').click(function()
+        {
+            loadData();
+
+        });
+
+        $('#addProjectButton').click(function()
+        {
+            //ADDS PROJECT TO OBJECT WITH EMPTY LIST
+            var projectName = $('#addProjectInput').val();
+            projectMap[projectName] = taskList;
+
+            //deletes input field
+            $('#addProjectInput').val("");
+
+            //DISPLAYS VALUES IN SELECT
+            //alert(Object.keys(projectMap));
+            for(var i=0; i < Object.keys(projectMap).length; i++)
+            {
+
+                var projectSelect = document.getElementById("projectSelect");
+                var option = document.createElement("option");
+                option.text = projectName;
+                projectSelect.add(option);
+
+
+            }
+
+            //To refresh the select
+            $('select').material_select();
+
+
+        });
+
+        $('#addTaskButton').click(function()
+        {
+            //gets the projectname from the selected project
+            var projectName = $('#projectSelect option:selected').text();
+
+            if(projectName == undefined || projectName == "")
+            {
+                alert("No project selected!");
+            }
+            else
+            {
+
+                //gets the taskname from the input field
+                var taskName = $('#addTaskInput').val();
+
+                //deletes input field
+                $('#addTaskInput').val("");
+
+                //pulls the tasklist out of the object
+                taskList = projectMap[projectName];
+
+                //adds the task string to the object
+                taskList.push(taskName);
+
+                //Loops through every task
+                for(var i=0; i < taskList.length; i++)
+                {
+
+                    var taskSelect = document.getElementById("taskSelect");
+                    var option = document.createElement("option");
+                    option.text = taskName;
+                    taskSelect.add(option);
+
+                }
+
+                //To refresh the select
+                $('select').material_select();
+
+            }
+
+
+            //save task array back to project object
+            projectMap[projectName] = taskList;
+
+            //save map to local storage
+            localStorage.setItem("projectMap", projectMap);
+
+
+        });
+
+
+
+
+
+
+
+
+
+
+
+
+
+    });
+
+}
+else
+{
+    //No Storage Support
+    alert("Your browser is too old for this stuff or you have things disabled!");
+}

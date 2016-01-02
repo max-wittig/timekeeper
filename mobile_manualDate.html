@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--<link rel="stylesheet" type="text/css" href="style.css">-->
+    <link rel="stylesheet" href="style.css" />
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/css/materialize.min.css">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+
+    <meta charset="UTF-8">
+    <!--<meta http-equiv="refresh" content="10"> -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#263238">
+    <title>TimeKeeper</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js"></script>
+
+    <script src="init.js"></script>
+    <script src="sortTable.js"></script>
+    <script src="addManualEntry.js"></script>
+
+</head>
+<body>
+<header>
+    <nav>
+
+        <div class="blue-grey darken-4 nav-wrapper">
+            <a href="timekeeper" class="brand-logo center">TimeKeeper</a>
+            <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+            <ul id="nav-mobile-left" class="left hide-on-med-and-down">
+                <li><a id="importButton" href="javascript:void(null);">Import</a></li>
+                <li><a id="exportButton" href="javascript:void(null);">Export</a></li>
+                <!--<li><a class="modal-trigger" href="#addManualDate">Add Manual Date</a></li>-->
+                <li><a href="mobile_manualDate.html">Add Manual Date</a></li>
+                <li><a id="serverModalButton" href="mobile_server.html">Server</a></li>
+
+            </ul>
+            <ul id="nav-mobile-right" class="right hide-on-med-and-down">
+
+                <li><a href="mobile_graphicDisplay.html">Pie</a></li>
+                <li><a href="mobile_barStats.html">Bar</a></li>
+                <li><a href="mobile_stats.html">Stats</a></li>
+                <li><a id="creditButton" href="javascript:void(null);">Credits</a></li>
+            </ul>
+            <ul class="side-nav" id="mobile-demo">
+                <li><a href="timekeeper" class="btn-flat"><i class="material-icons left">home</i>TimeKeeper</a></li>
+                <li><a id="exportButtonM" class="btn-flat" onclick='document.getElementById("exportButton").click();' href="javascript:void(null);"><i class="material-icons left">call_made</i>Export</a></li>
+                <li><a class="btn-flat" id="importButtonM" onclick='document.getElementById("importButton").click();' href="javascript:void(null);"><i class="material-icons left">call_received</i>Import</a></li>
+                <li><a class="btn-flat" href="mobile_manualDate.html"><i class="material-icons left">note_add</i>Add Manual Date</a></li>
+                <li><a class="btn-flat" id="serverModalButtonM" href="mobile_server.html"><i class="material-icons left">import_export</i>Server</a></li>
+                <li><a class="btn-flat" id="canvasModalTriggerM" href="mobile_graphicDisplay.html"><i class="material-icons left">album</i>Pie</a></li>
+                <li><a class="btn-flat" href="mobile_barStats.html"><i class="material-icons left">equalizer</i>Bar</a></li>
+                <li><a class="btn-flat" id="statsModalTriggerM" href="mobile_stats.html"><i class="material-icons left">subject</i>Stats</a></li>
+                <li><a class="btn-flat" id="creditButtonM" onclick='document.getElementById("creditButton").click();' href="javascript:void(null);"><i class="material-icons left">info_outline</i>Credits</a></li>
+            </ul>
+        </div>
+    </nav>
+
+</header>
+<main>
+
+<br />
+<div class="row">
+
+    <div class="col s12 push-s2">
+        <div id="addManualDate">
+                <div class="row">
+                    <div class="col s1">
+                        <p class="thickLabel">Start-date:</p>
+                    </div>
+                    <div class="input-field col s3">
+                        <input type="date" class="datepicker" id="startDateInput">
+                    </div>
+
+                    <div class="col s1">
+                        <p class="thickLabel">Start-time:</p>
+                    </div>
+
+                    <div class="input-field col s3">
+                        <input type="text" id="startTimeInput">
+                        <label for="startTimeInput">HH:MM:SS</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s1">
+                        <p class="thickLabel">End-date:</p>
+                    </div>
+                    <div class="input-field col s3">
+                        <input id="endDateInput" type="date" class="datepicker">
+                    </div>
+
+                    <div class="col s1">
+                        <p class="thickLabel">End-time:</p>
+                    </div>
+
+                    <div class="input-field col s3">
+                        <input type="text" id="endTimeInput">
+                        <label for="endTimeInput">HH:MM:SS</label>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col s1">
+                        <p class="thickLabel" id="projectNameLabel">Project:</p>
+                    </div>
+                    <div class="input-field col s3">
+                        <input id="projectInput" type="text">
+                    </div>
+                    <div class="col s1">
+                        <p class="thickLabel" id="taskNameLabel">Task:</p>
+                    </div>
+                    <div class="input-field col s3">
+                        <input id="taskInput" type="text">
+                    </div>
+                </div>
+
+                <div>
+                    <a id="addToTableButton" class="waves-effect waves-green blue-grey lighten-1 btn">ADD</a>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</main>
+</body>
+</html>

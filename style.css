@@ -1,0 +1,75 @@
+html,body
+{
+    background: whitesmoke;
+    /* Set the height to match that of the viewport. */
+    height: 100vh;
+
+    /* Set the width to match that of the viewport. */
+    width: 100vw;
+
+    /* Remove any browser-default margins. */
+    margin: 0;
+
+}
+
+p.thickLabel
+{
+    font-size: 120%;
+    color: black;
+}
+
+thead
+{
+    font-weight: 500;
+}
+
+#totalTimeElement
+{
+    font-size: larger;
+    font-weight: 600;
+}
+
+#tableDiv
+{
+
+    min-height: 260px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    max-height: 40vh;
+
+}
+
+.hidden
+{
+    height: 0;
+    width: 0;
+
+}
+
+span
+{
+    color: black !important;
+}
+
+select
+{
+    background-color: #eceff1 !important;
+    color: black !important;
+}
+
+body
+{
+    overflow-x: hidden;
+}
+
+
+#lowerDiv
+{
+    height: 10vh;
+
+}
+
+table.fixed
+{
+    table-layout: fixed;
+}

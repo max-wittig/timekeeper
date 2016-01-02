@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Server</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/css/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#263238">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"></script>
+    <script src="https://cdn.socket.io/socket.io-1.3.7.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js"></script>
+    <script src="init.js"></script>
+    <script src="serverSave.js"></script>
+    <script src="sortTable.js"></script>
+    <script src="import_export.js"></script>
+</head>
+<body>
+<header>
+    <div class="hidden">
+        <div class="col s6 push-s1 m3 push-m3 l4 push-l4 hidden">
+            <input id="fileImport" type="file" style="visibility: hidden;" accept=".json"/>
+            <!--<a style="min-width: 120px" id="importButton" class="waves-effect waves-light btn">IMPORT</a>-->
+        </div>
+    </div>
+    <nav>
+
+        <div class="blue-grey darken-4 nav-wrapper">
+            <a href="timekeeper" class="brand-logo center">TimeKeeper</a>
+            <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+            <ul id="nav-mobile-left" class="left hide-on-med-and-down">
+                <li><a id="importButton" href="javascript:void(null);">Import</a></li>
+                <li><a id="exportButton" href="javascript:void(null);">Export</a></li>
+                <!--<li><a class="modal-trigger" href="#addManualDate">Add Manual Date</a></li>-->
+                <li><a href="mobile_manualDate.html">Add Manual Date</a></li>
+                <li><a id="serverModalButton" href="mobile_server.html">Server</a></li>
+
+            </ul>
+            <ul id="nav-mobile-right" class="right hide-on-med-and-down">
+
+                <li><a href="mobile_graphicDisplay.html">Pie</a></li>
+                <li><a href="mobile_barStats.html">Bar</a></li>
+                <li><a href="mobile_stats.html">Stats</a></li>
+                <li><a id="creditButton" href="javascript:void(null);">Credits</a></li>
+            </ul>
+            <ul class="side-nav" id="mobile-demo">
+                <li><a href="timekeeper" class="btn-flat"><i class="material-icons left">home</i>TimeKeeper</a></li>
+                <li><a id="exportButtonM" class="btn-flat" onclick='document.getElementById("exportButton").click();' href="javascript:void(null);"><i class="material-icons left">call_made</i>Export</a></li>
+                <li><a class="btn-flat" id="importButtonM" onclick='document.getElementById("importButton").click();' href="javascript:void(null);"><i class="material-icons left">call_received</i>Import</a></li>
+                <li><a class="btn-flat" href="mobile_manualDate.html"><i class="material-icons left">note_add</i>Add Manual Date</a></li>
+                <li><a class="btn-flat" id="serverModalButtonM" href="mobile_server.html"><i class="material-icons left">import_export</i>Server</a></li>
+                <li><a class="btn-flat" id="canvasModalTriggerM" href="mobile_graphicDisplay.html"><i class="material-icons left">album</i>Pie</a></li>
+                <li><a class="btn-flat" href="mobile_barStats.html"><i class="material-icons left">equalizer</i>Bar</a></li>
+                <li><a class="btn-flat" id="statsModalTriggerM" href="mobile_stats.html"><i class="material-icons left">subject</i>Stats</a></li>
+                <li><a class="btn-flat" id="creditButtonM" onclick='document.getElementById("creditButton").click();' href="javascript:void(null);"><i class="material-icons left">info_outline</i>Credits</a></li>
+            </ul>
+        </div>
+    </nav>
+
+
+    <br />
+</header>
+
+<div class="row">
+    <div class="input-field col s12 m12 l6 push-l3">
+        <input id="usernameInput" type="text">
+        <label class="active" for="usernameInput">Username</label>
+    </div>
+</div>
+<div class="row">
+    <div class="input-field col s12 m12 l6 push-l3">
+        <input id="passwordInput" type="password">
+        <label class="active" for="passwordInput">Password</label>
+    </div>
+</div>
+<div class="row">
+    <div class="col s12 m12 l6 push-l3">
+        <input type="checkbox" id="rememberLoginCheckBox" />
+        <label for="rememberLoginCheckBox">Remember Login</label>
+    </div>
+</div>
+<br />
+<div class="row">
+        <div class="col s6 m6 l1 push-l3">
+            <a id="loadFromServerButton" class="waves-effect waves-grey btn blue-grey darken-1">LOAD</a>
+        </div>
+        <div class="col s6 m6 l1 push-l7">
+            <a id="saveToServerButton" class="waves-effect waves-grey btn blue-grey darken-1">SAVE</a>
+        </div>
+</div>
+
+</body>
+</html>
