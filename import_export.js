@@ -29,9 +29,9 @@ $(document).ready(function()
             saveVersion: saveVersion,
             exportDate: moment().format("DD.MM.YYYY - HH:mm:ss")
         };
+        var timeKeeperSaveFileName = "timeKeeper - " + moment().format("DD.MM.YYYY - HH:mm:ss") + ".json";
 
-
-        download("timeTrackerSave.json",JSON.stringify(everything));
+        download(timeKeeperSaveFileName,JSON.stringify(everything));
     });
 
 

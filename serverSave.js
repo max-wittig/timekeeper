@@ -1,15 +1,33 @@
 
 var spaghettic0derURL = "https://spaghettic0der.noip.me:8000/timekeeper";
 
+function insertLoginData(rememberLoginCheckBox)
+{
+	var secretData = JSON.parse(localStorage.getItem("secretData"));
+		if(secretData == null)
+		{
+				console.log("secretData is null")
+		}
+		else
+		{
+			$('#usernameInput').val(secretData.username);
+			$('#passwordInput').val(secretData.password);
+			rememberLoginCheckBox.prop('checked', true);
+		}
+}
+
+
 if(typeof (Storage) !== "undefined")
 {
 
 	$(document).ready(function() 
 	{
 
+		
+	
 		var socket = io();
 		var rememberLoginCheckBox = $('#rememberLoginCheckBox');
-
+		insertLoginData(rememberLoginCheckBox);
 		$('#saveToServerButton').click(function()
 		{
 
@@ -31,7 +49,7 @@ if(typeof (Storage) !== "undefined")
 			socket.emit('saveTimeKeeperString',saveObjectArrayString,saveProjectArrayString,username,password);
 
 			$('#serverModal').closeModal();
-			location.href = spaghettic0derURL; //TODO NOT HARDCODE
+			location.href = "timekeeper"; //TODO NOT HARDCODE
 		});
 
 		rememberLoginCheckBox.click(function()
@@ -63,33 +81,16 @@ if(typeof (Storage) !== "undefined")
 
 		socket.on('loadTimeKeeperString',function(saveProjectArray,saveObjectArray)
 		{
-			$('#serverModal').closeModal();
+			
 			localStorage.setItem('saveObjectArray',saveObjectArray);
 			localStorage.setItem('saveProjectArray',saveProjectArray);
-			location.href = spaghettic0derURL; //TODO DO NOT HARDCODE
+			location.href = "timekeeper"; //TODO DO NOT HARDCODE
 
 		});
 
 		socket.on('loadTimeKeeperStringFail',function()
 		{
 			alert("Wrong data!");
-
-		});
-
-		//Modal button clicked
-		$('#serverModalButton').click(function()
-		{
-			var secretData = JSON.parse(localStorage.getItem("secretData"));
-			if(secretData == null)
-			{
-				console.log("secretData is null")
-			}
-			else
-			{
-				$('#usernameInput').val(secretData.username);
-				$('#passwordInput').val(secretData.password);
-				rememberLoginCheckBox.prop('checked', true);
-			}
 
 		});
 

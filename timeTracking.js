@@ -40,6 +40,10 @@ if(typeof (Storage) !== "undefined")
 
             }
 
+            var deleteCell = headerRow.insertCell(-1);
+            deleteCell.textContent = " ";
+
+
             //Create Table body
             var tableBody = logTable.createTBody();
 
@@ -56,10 +60,21 @@ if(typeof (Storage) !== "undefined")
                             //content
                             var cell = contentRow.insertCell(-1);
                             cell.textContent = saveObjectArray[object][keyCode];
+
+
                         }
 
 
                     }
+
+                //creates button to manage the deleting...managing of a project
+                var buttonCell = contentRow.insertCell(-1);
+                var editTaskButton = document.createElement('a');
+                var deleteButton = document.createElement('a');
+                editTaskButton.textContent = "E";
+                deleteButton.innerHTML = '<i class="material-icons" style="color: black">delete</i>'
+                //buttonCell.appendChild(editTaskButton);
+                buttonCell.appendChild(deleteButton);
 
             }
 

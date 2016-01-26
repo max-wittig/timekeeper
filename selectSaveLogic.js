@@ -80,10 +80,13 @@ if(typeof (Storage) !== "undefined")
 			{
 				for(var i=0; i< saveProjectArray.length; i++)
 				{
-					var option = document.createElement("option");
-					option.text = saveProjectArray[i].name;
-                    option.value = saveProjectArray[i].name;
-					projectSelect.add(option);
+                    if(saveProjectArray[i].frozen == null || saveProjectArray[i].frozen == false)
+                    {
+                        var option = document.createElement("option");
+                        option.text = saveProjectArray[i].name;
+                        option.value = saveProjectArray[i].name;
+                        projectSelect.add(option);
+                    }
 				}
 
             $('select').material_select();
@@ -235,7 +238,8 @@ if(typeof (Storage) !== "undefined")
                     var projectObject =
                     {
                         name: projectName,
-                        taskList: taskList
+                        taskList: taskList,
+                        frozen: false
                     };
 
 

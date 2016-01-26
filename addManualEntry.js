@@ -61,7 +61,7 @@ function insertData(startTime,endTime,projectName,taskName,duration, durationInS
         {
             name: projectName,
             taskList: taskList,
-            totalTime : durationInSec
+            frozen: false
         };
 
         //pushes new ProjectObject in Array
