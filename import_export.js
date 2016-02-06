@@ -1,4 +1,4 @@
-var saveVersion = "1.1";
+var saveVersion = "1.2";
 var importButtonActive = true;
 
 $(document).ready(function()
@@ -74,14 +74,14 @@ $(document).ready(function()
                     }
                     else
                     {
-                        if(importString.saveProjectArray.totalTime != null)
+                        if (importString.saveVersion < 1.2)
                         {
-                            for(var i=0; i < importString.saveProjectArray.length; i++)
+                            for (var i = 0; i < importString.saveObjectArray.length; i++)
                             {
-                                delete importString.saveProjectArray[i].totalTime;
+                                //console.log(importString.saveObjectArray[i].startTime);
+                                importString.saveObjectArray[i].UUID = generateUUID();
                                 setImport(importString);
                             }
-
                         }
                     }
                 }

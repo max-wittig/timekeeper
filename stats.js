@@ -72,10 +72,10 @@ function getMonthStringFromMonthNumber(monthNumber)
 function updateSelectUI(string)
 {
 
-
     //doesn't work with jQuery
     var yearSelect = document.getElementById('yearSelect');
     var monthSelect = document.getElementById('monthSelect');
+    var dateSelect = document.getElementById('dateSelect');
     if(string == "year")
     {
         //clear Year UI
@@ -122,7 +122,8 @@ function updateSelectUI(string)
 
 
      }
-       //To refresh the select
+
+    //To refresh the select
        $('select').material_select();
 
 

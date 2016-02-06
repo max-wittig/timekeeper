@@ -57,9 +57,17 @@ select
     color: black !important;
 }
 
+::-webkit-scrollbar {
+    display: none;
+}
+
+
 body
 {
     overflow-x: hidden;
+    /*padding: 8px; */
+    overflow: -moz-scrollbars-none;
+
 }
 
 

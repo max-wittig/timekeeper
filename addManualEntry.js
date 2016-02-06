@@ -92,7 +92,8 @@ function insertData(startTime,endTime,projectName,taskName,duration, durationInS
         projectName: projectName,
         taskName: taskName,
         duration: duration,
-        durationInSec : durationInSec
+        durationInSec: durationInSec,
+        UUID: generateUUID()
     };
 
     saveObjectArray.push(saveObject);

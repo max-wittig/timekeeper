@@ -25,13 +25,12 @@ if(typeof (Storage) !== "undefined")
             $('#logTable').empty();
 
             //Table Head
-            //var headerRow = logTable.insertRow(0);
             var headerHead = logTable.createTHead();
             var headerRow = headerHead.insertRow(0);
             for(var keyThing in saveObjectArray[0])
             {
                 //Duration in sec is not important to show
-                if(keyThing != "durationInSec")
+                if (keyThing != "durationInSec" && keyThing != "UUID")
                 {
                     var header = headerRow.insertCell(-1);
                     header.textContent = keyThing.toUpperCase();
@@ -50,31 +49,34 @@ if(typeof (Storage) !== "undefined")
             //loops though every object in saveObjectArray and prints out table rows
             for(var object in saveObjectArray)
             {
-                    var contentRow = tableBody.insertRow(0);
+                var contentRow = tableBody.insertRow(0);
 
-                    for(var keyCode in saveObjectArray[object])
+                for (var keyCode in saveObjectArray[object])
+                {
+                    //Duration in sec and keycode should not be shown
+                    if (keyCode != "durationInSec" && keyCode != "UUID")
                     {
-                        //Duration in sec is not important to show
-                        if(keyCode != "durationInSec")
-                        {
-                            //content
-                            var cell = contentRow.insertCell(-1);
-                            cell.textContent = saveObjectArray[object][keyCode];
-
-
-                        }
-
-
+                        //content
+                        var cell = contentRow.insertCell(-1);
+                        cell.textContent = saveObjectArray[object][keyCode];
                     }
+                    //adds UUID to tableRow
+                    if (keyCode == "UUID")
+                        contentRow.id = saveObjectArray[object][keyCode];
+                }
 
                 //creates button to manage the deleting...managing of a project
                 var buttonCell = contentRow.insertCell(-1);
                 var editTaskButton = document.createElement('a');
                 var deleteButton = document.createElement('a');
-                editTaskButton.textContent = "E";
-                deleteButton.innerHTML = '<i class="material-icons" style="color: black">delete</i>'
-                //buttonCell.appendChild(editTaskButton);
+                deleteButton.href = "javascript:void(null);";
+                editTaskButton.href = "javascript:void(null);";
+                editTaskButton.innerHTML = '<i class="material-icons" style="color: black">settings</i>';
+                deleteButton.innerHTML = '<i class="material-icons" style="color: black">delete</i>';
+                deleteButton.id = "deleteTaskButton";
+                editTaskButton.id = "editTaskButton";
                 buttonCell.appendChild(deleteButton);
+                buttonCell.appendChild(editTaskButton);
 
             }
 
@@ -237,7 +239,8 @@ if(typeof (Storage) !== "undefined")
 					projectName: selectedProject,
 					taskName: selectedTask,
 					duration: totalDur,
-                    durationInSec: durSec
+                    durationInSec: durSec,
+                    UUID: generateUUID()
 
 				};
 
