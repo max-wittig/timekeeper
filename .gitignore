@@ -28,6 +28,9 @@
 # IntelliJ
 /out/
 /server.js
+/materialize.min.css
+/jquery-2.1.4.js
+
 
 # mpeltonen/sbt-idea plugin
 .idea_modules/
