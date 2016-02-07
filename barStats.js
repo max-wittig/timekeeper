@@ -91,13 +91,14 @@ function updateDataBar(saveObjectArray)
     var selectedMonth = $('#monthSelectBar option:selected').val();
 
     var myChart = document.getElementById("barChartCanvas").getContext("2d");
+    var color = getRandomColor();
     var data = {
         labels: [],
         datasets:
             [
                 {
 
-                    fillColor: getRandomColor()
+                    fillColor: color
 
                 }
             ]
@@ -257,7 +258,6 @@ function insertAllData(myBarChart,saveObjectArray)
 
     }
 
-
     //loop through relevant years
     for(var y=0; y < relevantYears.length; y++)
     {
@@ -276,11 +276,6 @@ function insertAllData(myBarChart,saveObjectArray)
         }
         myBarChart.addData([totalYearTime], yearName);
     }
-
-
-
-
-
 }
 function getDaysInMonth(year,month)
 {

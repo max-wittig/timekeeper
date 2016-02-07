@@ -1,5 +1,4 @@
 
-var spaghettic0derURL = "https://spaghettic0der.noip.me:8000/timekeeper";
 
 function insertLoginData(rememberLoginCheckBox)
 {
