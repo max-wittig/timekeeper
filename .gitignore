@@ -31,7 +31,7 @@
 /materialize.min.css
 /jquery-2.1.4.js
 /jquery-2.2.0.js
-
+/commitToServer.sh
 
 # mpeltonen/sbt-idea plugin
 .idea_modules/
