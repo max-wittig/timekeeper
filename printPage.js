@@ -28,7 +28,7 @@ $(document).ready(function()
             var headerRow = tableHead.insertRow(0);  //TODO maybe use thead instead sometime...
             for (var keyThing in saveObjectArray[0])
             {
-                if (keyThing != "durationInSec")
+                if (keyThing != "durationInSec" && keyThing != "UUID")
                 {
                     var header = headerRow.insertCell(-1);
                     header.textContent = keyThing.toUpperCase();
@@ -43,16 +43,16 @@ $(document).ready(function()
                 var contentRow = tableBody.insertRow(0);
                 for (var keyCode in saveObjectArray[object])
                 {
-                    if (keyCode != "durationInSec")
+                    if (keyCode != "durationInSec" && keyCode != "UUID")
                     {
                         //content
                         var cell = contentRow.insertCell(-1);
                         cell.textContent = saveObjectArray[object][keyCode];
 
                     }
-
-
+                    contentRow.id = saveObjectArray[object].UUID;
                 }
+
             }
 
 
