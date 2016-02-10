@@ -5,6 +5,7 @@ $(document).ready(function()
 
     for(var i=0; i < saveProjectArray.length; i++)
     {
+        //for frozen attribute
         var p = document.createElement("p");
         var checkBox = document.createElement("input");
 
@@ -23,8 +24,9 @@ $(document).ready(function()
         label.htmlFor = saveProjectArray[i].name;
         label.textContent = saveProjectArray[i].name;
         p.appendChild(label);
-
         checkBoxContainer.appendChild(p);
+
+
     }
 
 
