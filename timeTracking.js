@@ -69,14 +69,19 @@ if(typeof (Storage) !== "undefined")
                 var buttonCell = contentRow.insertCell(-1);
                 var editTaskButton = document.createElement('a');
                 var deleteButton = document.createElement('a');
+                var taskExportButton = document.createElement('a');
                 deleteButton.href = "javascript:void(null);";
                 editTaskButton.href = "javascript:void(null);";
                 editTaskButton.innerHTML = '<i class="material-icons" style="color: black">settings</i>';
                 deleteButton.innerHTML = '<i class="material-icons" style="color: black">delete</i>';
                 deleteButton.id = "deleteTaskButton";
                 editTaskButton.id = "editTaskButton";
+                taskExportButton.href = "javascript:void(null);";
+                taskExportButton.id = "taskExportButton";
+                taskExportButton.innerHTML = '<i class="material-icons" style="color: black">call_made</i>'
                 buttonCell.appendChild(deleteButton);
                 buttonCell.appendChild(editTaskButton);
+                buttonCell.appendChild(taskExportButton);
 
             }
 

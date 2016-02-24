@@ -4,7 +4,6 @@ var importButtonActive = true;
 $(document).ready(function()
 {
 
-
     function download(filename, text)
     {
         var element = document.createElement('a');
@@ -23,6 +22,7 @@ $(document).ready(function()
 
         var everything =
         {
+            type: "Complete",
             saveProjectArray: JSON.parse(localStorage.getItem("saveProjectArray")),
             saveObjectArray: JSON.parse(localStorage.getItem("saveObjectArray")),
             settingsObject: JSON.parse(localStorage.getItem("settingsObject")),
@@ -43,6 +43,16 @@ $(document).ready(function()
         }
     });
 
+    function convertLegacyJSON(json)
+    {
+        for (var i = 0; i < json.saveObjectArray.length; i++)
+        {
+            //console.log(importString.saveObjectArray[i].startTime);
+            json.saveObjectArray[i].UUID = generateUUID();
+        }
+        return json;
+    }
+
 
     function setImport(importString)
     {
@@ -54,7 +64,75 @@ $(document).ready(function()
         localStorage.setItem("settingsObject",JSON.stringify(settingsObject));
         sortTable(); //Input Data is sorted before page is reloaded!
         location.reload();
+    }
 
+    //checks if project is already in saveProjectArray
+    function addProjectToArray(saveObject)
+    {
+        function buildProjectObject()
+        {
+            var projectObject =
+            {
+                name: saveObject.projectName,
+                taskList: [saveObject.taskName],
+                frozen: false
+            };
+            return projectObject;
+        }
+
+        var saveProjectArray = JSON.parse(localStorage.getItem("saveProjectArray"));
+        if (saveProjectArray == null)
+        {
+
+            saveProjectArray = [buildProjectObject()];
+
+        }
+        else
+        {
+            var containsProject = false;
+            for (var i = 0; i < saveProjectArray.length; i++)
+            {
+                if (saveObject.projectName == saveProjectArray[i].name)
+                {
+                    containsProject = true;
+                    var containsTaskList = false;
+                    //loop taskList of Project
+                    for (var j = 0; j < saveProjectArray[i].taskList.length; j++)
+                    {
+                        if (saveProjectArray[i].taskList[i] == saveObject.taskName)
+                        {
+                            containsTaskList = true;
+                            break;
+                        }
+                        else
+                        {
+                            saveProjectArray[i].taskList.push(saveObject.taskName);
+                        }
+                    }
+                    break;
+                }
+            }
+
+            if (!containsProject)
+            {
+                saveProjectArray.push(buildProjectObject());
+            }
+
+        }
+        localStorage.setItem("saveProjectArray", JSON.stringify(saveProjectArray));
+
+    }
+
+    function importSingleTask(importString)
+    {
+        var saveObjectArray = JSON.parse(localStorage.getItem("saveObjectArray"));
+        if (saveObjectArray == null)
+            saveObjectArray = [];
+        saveObjectArray.push(importString.saveObject);
+        addProjectToArray(importString.saveObject);
+        localStorage.setItem("saveObjectArray", JSON.stringify(saveObjectArray));
+        sortTable();
+        location.reload();
     }
 
     $('#fileImport').change(function()
@@ -68,20 +146,25 @@ $(document).ready(function()
                 {
                     var importString = JSON.parse(file);
 
-                    if(importString.saveVersion == saveVersion)
+                    if (importString.saveVersion >= 1.2)
                     {
-                        setImport(importString);
+                        console.log(importString.type);
+                        switch (importString.type)
+                        {
+                            case "SingleTask":
+                                importSingleTask(importString);
+                                break;
+                            case "Complete":
+                            default:
+                                setImport(importString);
+                                break;
+                        }
                     }
                     else
                     {
                         if (importString.saveVersion < 1.2)
                         {
-                            for (var i = 0; i < importString.saveObjectArray.length; i++)
-                            {
-                                //console.log(importString.saveObjectArray[i].startTime);
-                                importString.saveObjectArray[i].UUID = generateUUID();
-                                setImport(importString);
-                            }
+                            setImport(convertLegacyJSON(importString));
                         }
                     }
                 }

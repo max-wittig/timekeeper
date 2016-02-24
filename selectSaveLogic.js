@@ -56,8 +56,6 @@ if(typeof (Storage) !== "undefined")
     $(document).ready(function()
     {
 
-
-
         var projectSelect = document.getElementById("projectSelect");
         var taskSelect = document.getElementById("taskSelect");
 
@@ -111,7 +109,6 @@ if(typeof (Storage) !== "undefined")
             emptyOptionTask.text = " ";
             taskSelect.add(emptyOptionTask);
 
-
             for(var j=0; j < saveProjectArray.length; j++)
             {
                 if(saveProjectArray[j].name == projectName)
@@ -132,24 +129,14 @@ if(typeof (Storage) !== "undefined")
                             optionTask.value = taskListing[i];
                             taskSelect.add(optionTask);
                         }
-
                     }
-
                     //To refresh the select
                     $('select').material_select();
 
                     break;
                 }
-
-
-
             }
-
-
-
-
         });
-
 
         //different task was chosen
         $('#taskSelect').change(function()

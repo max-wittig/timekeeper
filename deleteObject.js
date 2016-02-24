@@ -1,3 +1,38 @@
+function download(filename, text)
+{
+    var element = document.createElement('a');
+    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+    element.setAttribute('download', filename);
+
+    element.style.display = 'none';
+    document.body.appendChild(element);
+    element.click();
+    document.body.removeChild(element);
+}
+
+
+function downloadFromTaskFromLocalStorage(UUID)
+{
+    var saveObjectArray = JSON.parse(localStorage.getItem("saveObjectArray"));
+    if (saveObjectArray != null)
+    {
+        for (var i = 0; i < saveObjectArray.length; i++)
+        {
+            if (saveObjectArray[i].UUID == UUID)
+            {
+                var toDownload =
+                {
+                    saveVersion: 1.3,
+                    type: "SingleTask",
+                    saveObject: saveObjectArray[i]
+                };
+                download(saveObjectArray[i].projectName + " - " + saveObjectArray[i].taskName + ".json", JSON.stringify(toDownload));
+            }
+        }
+    }
+}
+
+
 function changeTaskFromLocalStorage(row, newProjectName, newTaskName)
 {
     var saveObjectArray = JSON.parse(localStorage.getItem("saveObjectArray"));
@@ -15,8 +50,6 @@ function changeTaskFromLocalStorage(row, newProjectName, newTaskName)
 
         localStorage.setItem("saveObjectArray", JSON.stringify(saveObjectArray));
     }
-
-
 }
 
 
@@ -51,8 +84,6 @@ $(document).ready(function()
         if (this.id == "deleteTaskButton")
         {
             //first parent == td, second is tr
-
-
             if (confirm('Are you sure you want to delete the Task: ' + cells[3].textContent + ' started on ' + cells[0].textContent + '?'))
             {
                 deleteFromLocalStorage(row);
@@ -72,6 +103,10 @@ $(document).ready(function()
                 cells[3].textContent = newTaskName;
             }
 
+        }
+        else if (this.id == "taskExportButton")
+        {
+            downloadFromTaskFromLocalStorage(row.id);
         }
 
    });
