@@ -145,10 +145,8 @@ $(document).ready(function()
                 try
                 {
                     var importString = JSON.parse(file);
-
                     if (importString.saveVersion >= 1.2)
                     {
-                        console.log(importString.type);
                         switch (importString.type)
                         {
                             case "SingleTask":

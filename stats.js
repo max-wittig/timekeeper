@@ -3,6 +3,26 @@
 var yearArray = [];
 var monthArray = [];
 
+function sortProjectByName(arr)
+{
+    if (arr != null && arr != undefined)
+    {
+        arr.sort(function (a, b)
+        {
+            if (a.toLowerCase() > b.toLowerCase())
+            {
+                return 1;
+            }
+            if (a.toLowerCase() < b.toLowerCase())
+            {
+                return -1;
+            }
+            // a must be equal to b
+            return 0;
+        });
+    }
+    return arr;
+}
 
 
 function getTaskTimes(taskName)
@@ -171,6 +191,7 @@ function filterData_ALL_ALL(selectedYear,selectedMonth,saveProjectArray,saveObje
 
     }
 
+    relevantProjectArray = sortProjectByName(relevantProjectArray);
 
     //loops through the relevant projects
     for(var p=0; p < relevantProjectArray.length; p++)
@@ -290,7 +311,7 @@ function filterData_ANYTHING_ALL(selectedYear,selectedMonth,saveProjectArray,sav
         }
     }
 
-
+    relevantProjectArray = sortProjectByName(relevantProjectArray);
     //loops through the relevant projects
     for(var p=0; p < relevantProjectArray.length; p++)
     {
@@ -416,7 +437,7 @@ function filterData_ANYTHING_ANYTHING(selectedYear,selectedMonth,saveProjectArra
         }
     }
 
-
+    relevantProjectArray = sortProjectByName(relevantProjectArray);
     //loops through the relevant projects
     for(var p=0; p < relevantProjectArray.length; p++)
     {
