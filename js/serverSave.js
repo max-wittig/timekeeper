@@ -44,7 +44,7 @@ if(typeof (Storage) !== "undefined")
 			var saveObjectArrayString = localStorage.getItem('saveObjectArray');
 			var saveProjectArrayString = localStorage.getItem('saveProjectArray');
 			socket.emit('saveTimeKeeperString',saveObjectArrayString,saveProjectArrayString,username,password);
-			location.href = "timekeeper"; //TODO NOT HARDCODE
+			location.href = "../html/timekeeper.html"; //TODO NOT HARDCODE
 		});
 
 		rememberLoginCheckBox.click(function()
@@ -79,7 +79,7 @@ if(typeof (Storage) !== "undefined")
 			
 			localStorage.setItem('saveObjectArray',saveObjectArray);
 			localStorage.setItem('saveProjectArray',saveProjectArray);
-			location.href = "timekeeper"; //TODO DO NOT HARDCODE
+			location.href = "../html/timekeeper.html";
 
 		});
 
