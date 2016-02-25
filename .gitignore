@@ -28,14 +28,11 @@
 # IntelliJ
 /out/
 /server.js
-/bfg-1.12.8.jar
-/jquery-2.2.0.js
+/js/jquery-2.2.0.js
 /commitToServer.sh
 /certs
 /timekeeperServer.js
-/cert.pem
-/chain.pem
-/fullchain.pem
+
 
 # mpeltonen/sbt-idea plugin
 .idea_modules/

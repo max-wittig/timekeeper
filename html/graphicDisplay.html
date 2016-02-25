@@ -3,7 +3,7 @@
 <head>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!--<link rel="stylesheet" type="text/css" href="style.css">-->
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="../css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/css/materialize.min.css">
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
     <link rel="icon" href="/favicon.ico" type="image/x-icon">
@@ -18,10 +18,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js"></script>
-    <script src="init.js"></script>
-    <script src="graphicDisplay.js"></script>
-    <script src="sortTable.js"></script>
-    <script src="import_export.js"></script>
+    <script src="../js/init.js"></script>
+    <script src="../js/graphicDisplay.js"></script>
+    <script src="../js/sortTable.js"></script>
+    <script src="../js/import_export.js"></script>
 </head>
 <body>
 <header>
@@ -34,35 +34,40 @@
     <nav>
 
         <div class="blue-grey darken-4 nav-wrapper">
-            <a href="timekeeper" class="brand-logo center">TimeKeeper</a>
+            <a href="timekeeper.html" class="brand-logo center">TimeKeeper</a>
             <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
             <ul id="nav-mobile-left" class="left hide-on-med-and-down">
                 <li><a id="importButton" href="javascript:void(null);">Import</a></li>
                 <li><a id="exportButton" href="javascript:void(null);">Export</a></li>
                 <!--<li><a class="modal-trigger" href="#addManualDate">Add Manual Date</a></li>-->
-                <li><a href="mobile_manualDate.html">Add Manual Date</a></li>
-                <li><a id="serverModalButton" href="mobile_server.html">Server</a></li>
+                <li><a href="manualDate.html">Add Manual Date</a></li>
+                <li><a id="serverModalButton" href="server.html">Server</a></li>
 
             </ul>
             <ul id="nav-mobile-right" class="right hide-on-med-and-down">
 
-                <li><a href="mobile_graphicDisplay.html">Pie</a></li>
-                <li><a href="mobile_barStats.html">Bar</a></li>
-                <li><a href="mobile_stats.html">Stats</a></li>
+                <li><a href="graphicDisplay.html">Pie</a></li>
+                <li><a href="barStats.html">Bar</a></li>
+                <li><a href="stats.html">Stats</a></li>
                 <li><a href="setProjectFrozen.html">Settings</a></li>
                 <li><a id="creditButton" href="javascript:void(null);">Credits</a></li>
             </ul>
             <ul class="side-nav" id="mobile-demo">
-                <li><a href="timekeeper" class="btn-flat"><i class="material-icons left">home</i>TimeKeeper</a></li>
+                <li><a href="timekeeper.html" class="btn-flat"><i class="material-icons left">home</i>TimeKeeper</a>
+                </li>
                 <li><a id="exportButtonM" class="btn-flat" onclick='document.getElementById("exportButton").click();' href="javascript:void(null);"><i class="material-icons left">call_made</i>Export</a></li>
                 <li><a class="btn-flat" id="importButtonM" onclick='document.getElementById("importButton").click();' href="javascript:void(null);"><i class="material-icons left">call_received</i>Import</a></li>
-                <li><a class="btn-flat" href="mobile_manualDate.html"><i class="material-icons left">note_add</i>Add Manual Date</a></li>
-                <li><a class="btn-flat" id="serverModalButtonM" href="mobile_server.html"><i class="material-icons left">import_export</i>Server</a></li>
-                <li><a class="btn-flat" id="canvasModalTriggerM" href="mobile_graphicDisplay.html"><i class="material-icons left">album</i>Pie</a></li>
-                <li><a class="btn-flat" href="mobile_barStats.html"><i class="material-icons left">equalizer</i>Bar</a></li>
+                <li><a class="btn-flat" href="manualDate.html"><i class="material-icons left">note_add</i>Add Manual
+                    Date</a></li>
+                <li><a class="btn-flat" id="serverModalButtonM" href="server.html"><i class="material-icons left">import_export</i>Server</a>
+                </li>
+                <li><a class="btn-flat" id="canvasModalTriggerM" href="graphicDisplay.html"><i
+                        class="material-icons left">album</i>Pie</a></li>
+                <li><a class="btn-flat" href="barStats.html"><i class="material-icons left">equalizer</i>Bar</a></li>
                 <li><a class="btn-flat" href="setProjectFrozen.html"><i
                         class="material-icons left">settings</i>Settings</a></li>
-                <li><a class="btn-flat" id="statsModalTriggerM" href="mobile_stats.html"><i class="material-icons left">subject</i>Stats</a></li>
+                <li><a class="btn-flat" id="statsModalTriggerM" href="stats.html"><i
+                        class="material-icons left">subject</i>Stats</a></li>
                 <li><a class="btn-flat" id="creditButtonM" onclick='document.getElementById("creditButton").click();' href="javascript:void(null);"><i class="material-icons left">info_outline</i>Credits</a></li>
             </ul>
         </div>
