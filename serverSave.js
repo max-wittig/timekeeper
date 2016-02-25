@@ -22,8 +22,6 @@ if(typeof (Storage) !== "undefined")
 	$(document).ready(function() 
 	{
 
-		
-	
 		var socket = io();
 		var rememberLoginCheckBox = $('#rememberLoginCheckBox');
 		insertLoginData(rememberLoginCheckBox);
@@ -46,8 +44,6 @@ if(typeof (Storage) !== "undefined")
 			var saveObjectArrayString = localStorage.getItem('saveObjectArray');
 			var saveProjectArrayString = localStorage.getItem('saveProjectArray');
 			socket.emit('saveTimeKeeperString',saveObjectArrayString,saveProjectArrayString,username,password);
-
-			$('#serverModal').closeModal();
 			location.href = "timekeeper"; //TODO NOT HARDCODE
 		});
 

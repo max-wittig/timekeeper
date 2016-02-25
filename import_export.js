@@ -66,26 +66,26 @@ $(document).ready(function()
         location.reload();
     }
 
+    //returns a valid projectObject from a saveObject
+    function buildProjectObject(saveObject)
+    {
+        var projectObject =
+        {
+            name: saveObject.projectName,
+            taskList: [saveObject.taskName],
+            frozen: false
+        };
+        return projectObject;
+    }
+
+
     //checks if project is already in saveProjectArray
     function addProjectToArray(saveObject)
     {
-        function buildProjectObject()
-        {
-            var projectObject =
-            {
-                name: saveObject.projectName,
-                taskList: [saveObject.taskName],
-                frozen: false
-            };
-            return projectObject;
-        }
-
         var saveProjectArray = JSON.parse(localStorage.getItem("saveProjectArray"));
         if (saveProjectArray == null)
         {
-
-            saveProjectArray = [buildProjectObject()];
-
+            saveProjectArray = [buildProjectObject(saveObject)];
         }
         else
         {
@@ -99,7 +99,7 @@ $(document).ready(function()
                     //loop taskList of Project
                     for (var j = 0; j < saveProjectArray[i].taskList.length; j++)
                     {
-                        if (saveProjectArray[i].taskList[i] == saveObject.taskName)
+                        if (saveProjectArray[i].taskList[j] == saveObject.taskName)
                         {
                             containsTaskList = true;
                             break;
@@ -115,7 +115,7 @@ $(document).ready(function()
 
             if (!containsProject)
             {
-                saveProjectArray.push(buildProjectObject());
+                saveProjectArray.push(buildProjectObject(saveObject));
             }
 
         }
@@ -126,13 +126,34 @@ $(document).ready(function()
     function importSingleTask(importString)
     {
         var saveObjectArray = JSON.parse(localStorage.getItem("saveObjectArray"));
-        if (saveObjectArray == null)
+        var isAlreadyImported = false;
+        if (saveObjectArray != null)
+        {
+            for (var i = 0; i < saveObjectArray.length; i++)
+            {
+                if (importString.saveObject.UUID == saveObjectArray[i].UUID)
+                {
+                    isAlreadyImported = true;
+                }
+            }
+        }
+        else
+        {
             saveObjectArray = [];
-        saveObjectArray.push(importString.saveObject);
-        addProjectToArray(importString.saveObject);
-        localStorage.setItem("saveObjectArray", JSON.stringify(saveObjectArray));
-        sortTable();
-        location.reload();
+        }
+
+        if (!isAlreadyImported)
+        {
+            saveObjectArray.push(importString.saveObject);
+            addProjectToArray(importString.saveObject);
+            localStorage.setItem("saveObjectArray", JSON.stringify(saveObjectArray));
+            sortTable();
+            location.reload();
+        }
+        else
+        {
+            alert("The object is already imported!");
+        }
     }
 
     $('#fileImport').change(function()
