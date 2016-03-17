@@ -1,4 +1,4 @@
-var saveVersion = "1.2";
+var saveVersion = "1.3";
 var importButtonActive = true;
 
 $(document).ready(function()
@@ -154,6 +154,10 @@ $(document).ready(function()
         {
             alert("The object is already imported!");
         }
+    }
+
+    function importAndMerge() {
+
     }
 
     $('#fileImport').change(function()

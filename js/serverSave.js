@@ -44,7 +44,7 @@ if(typeof (Storage) !== "undefined")
 			var saveObjectArrayString = localStorage.getItem('saveObjectArray');
 			var saveProjectArrayString = localStorage.getItem('saveProjectArray');
 			socket.emit('saveTimeKeeperString',saveObjectArrayString,saveProjectArrayString,username,password);
-			location.href = "../html/timekeeper.html"; //TODO NOT HARDCODE
+			location.href = "../html/timekeeper.html";
 		});
 
 		rememberLoginCheckBox.click(function()
