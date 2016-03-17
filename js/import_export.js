@@ -1,6 +1,20 @@
 var saveVersion = "1.3";
 var importButtonActive = true;
 
+
+function contains(array, object)
+{
+    var i = array.length;
+    while (i--)
+    {
+        if (array[i] == object)
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
 $(document).ready(function()
 {
 
@@ -156,7 +170,67 @@ $(document).ready(function()
         }
     }
 
-    function importAndMerge() {
+    function importAndMerge(importString)
+    {
+        var saveObjectArray = JSON.parse(localStorage.getItem("saveObjectArray"));
+        //var saveProjectArray = JSON.parse(localStorage.getItem("saveProjectArray"));
+        var currentSaveObjectArray = importString.saveObjectArray;
+        //var currentSaveProjectArray = importString.saveProjectArray;
+
+        var saveObjectArrayUUID = [];
+        var currentSaveObjectArrayUUID = [];
+
+        //fill array from localStorage
+        for (var i = 0; i < saveObjectArray.length; i++)
+        {
+            saveObjectArrayUUID.push(saveObjectArray[i].UUID);
+        }
+        console.log("SaveObjectArrayUUID: " + saveObjectArrayUUID);
+
+        //fill array from file
+        for (var j = 0; j < currentSaveObjectArray.length; j++)
+        {
+            currentSaveObjectArrayUUID.push(currentSaveObjectArray[j].UUID);
+        }
+        console.log("currentSaveObjectArrayUUID: " + currentSaveObjectArrayUUID.length);
+
+        //throw UUIDs out of save which are already in localStorage
+        for (var x = 0; x < currentSaveObjectArrayUUID.length; x++)
+        {
+            for (var t = 0; t < saveObjectArrayUUID.length; t++)
+            {
+                if (currentSaveObjectArrayUUID[x] == saveObjectArrayUUID[t])
+                {
+                    currentSaveObjectArrayUUID.splice(x, 1);
+                }
+            }
+        }
+
+        console.log("currentSaveObjectArrayUUID: " + currentSaveObjectArrayUUID.length);
+
+        //find every Object from currentSaveProjectArray based on the UUID, which currently isn't part of the saveFile
+        for (var o = 0; o < currentSaveObjectArrayUUID.length; o++)
+        {
+            for (var y = 0; y < currentSaveObjectArray.length; y++)
+            {
+                if (currentSaveObjectArray[y].UUID == currentSaveObjectArrayUUID[o])
+                {
+                    saveObjectArray.push(currentSaveObjectArray[y]);
+                    console.log("Tasks to add! :" + currentSaveObjectArray[y].taskName);
+                }
+            }
+        }
+
+
+        if (currentSaveObjectArrayUUID.length > 0)
+        {
+            //addProjectToArray(importString.saveObject);
+            localStorage.setItem("saveObjectArray", JSON.stringify(saveObjectArray));
+            sortTable();
+            location.reload();
+        }
+
+
 
     }
 
@@ -176,6 +250,9 @@ $(document).ready(function()
                         {
                             case "SingleTask":
                                 importSingleTask(importString);
+                                break;
+                            case "Incomplete":
+                                importAndMerge(importString);
                                 break;
                             case "Complete":
                             default:
