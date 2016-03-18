@@ -173,9 +173,10 @@ $(document).ready(function()
     function importAndMerge(importString)
     {
         var saveObjectArray = JSON.parse(localStorage.getItem("saveObjectArray"));
-        //var saveProjectArray = JSON.parse(localStorage.getItem("saveProjectArray"));
+        if (saveObjectArray == null)
+            saveObjectArray = [];
         var currentSaveObjectArray = importString.saveObjectArray;
-        //var currentSaveProjectArray = importString.saveProjectArray;
+
 
         var saveObjectArrayUUID = [];
         var currentSaveObjectArrayUUID = [];
@@ -215,23 +216,25 @@ $(document).ready(function()
             {
                 if (currentSaveObjectArray[y].UUID == currentSaveObjectArrayUUID[o])
                 {
+                    addProjectToArray(currentSaveObjectArray[y]);
                     saveObjectArray.push(currentSaveObjectArray[y]);
                     console.log("Tasks to add! :" + currentSaveObjectArray[y].taskName);
                 }
             }
         }
 
-
         if (currentSaveObjectArrayUUID.length > 0)
         {
             //addProjectToArray(importString.saveObject);
             localStorage.setItem("saveObjectArray", JSON.stringify(saveObjectArray));
             sortTable();
+
             location.reload();
         }
-
-
-
+        else
+        {
+            alert("Nothing to merge!");
+        }
     }
 
     $('#fileImport').change(function()
