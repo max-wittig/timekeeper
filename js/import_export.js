@@ -118,10 +118,11 @@ $(document).ready(function()
                             containsTaskList = true;
                             break;
                         }
-                        else
-                        {
-                            saveProjectArray[i].taskList.push(saveObject.taskName);
-                        }
+                    }
+
+                    if (!containsTaskList)
+                    {
+                        saveProjectArray[i].taskList.push(saveObject.taskName);
                     }
                     break;
                 }
