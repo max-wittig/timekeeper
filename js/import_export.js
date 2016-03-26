@@ -45,7 +45,7 @@ $(document).ready(function()
         };
         var timeKeeperSaveFileName = "timeKeeper - " + moment().format("DD.MM.YYYY - HH:mm:ss") + ".json";
 
-        download(timeKeeperSaveFileName,JSON.stringify(everything));
+        download(timeKeeperSaveFileName, JSON.stringify(everything, null, 3));
     });
 
 
