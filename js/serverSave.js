@@ -41,9 +41,16 @@ if(typeof (Storage) !== "undefined")
 				localStorage.setItem("secretData",JSON.stringify(secretData));
 			}
 
-			var saveObjectArrayString = localStorage.getItem('saveObjectArray');
-			var saveProjectArrayString = localStorage.getItem('saveProjectArray');
-			socket.emit('saveTimeKeeperString',saveObjectArrayString,saveProjectArrayString,username,password);
+			var everything =
+			{
+				type: "Complete",
+				saveProjectArray: localStorage.getItem("saveProjectArray"),
+				saveObjectArray: localStorage.getItem("saveObjectArray"),
+				settingsObject: localStorage.getItem("settingsObject"),
+				saveVersion: saveVersion
+			};
+
+			socket.emit('saveTimeKeeperString', JSON.stringify(everything), username, password);
 			location.href = "../html/timekeeper.html";
 		});
 
@@ -74,13 +81,16 @@ if(typeof (Storage) !== "undefined")
 			socket.emit('loadTimeKeeperString',username,password);
 		});
 
-		socket.on('loadTimeKeeperString',function(saveProjectArray,saveObjectArray)
+		socket.on('loadTimeKeeperString', function (saveString)
 		{
-			
-			localStorage.setItem('saveObjectArray',saveObjectArray);
-			localStorage.setItem('saveProjectArray',saveProjectArray);
-			location.href = "../html/timekeeper.html";
-
+			var everything = JSON.parse(saveString.toString());
+			console.log(everything);
+			if (everything != null && everything != undefined)
+			{
+				localStorage.setItem('saveObjectArray', everything.saveObjectArray);
+				localStorage.setItem('saveProjectArray', everything.saveProjectArray);
+				location.href = "../html/timekeeper.html";
+			}
 		});
 
 		socket.on('loadTimeKeeperStringFail',function()
