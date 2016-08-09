@@ -30,10 +30,15 @@ if(typeof (Storage) !== "undefined")
             for(var keyThing in saveObjectArray[0])
             {
                 //Duration in sec is not important to show
-                if (keyThing != "durationInSec" && keyThing != "UUID")
+                if (keyThing != "UUID" && keyThing != "durationInSec")
                 {
                     var header = headerRow.insertCell(-1);
                     header.textContent = keyThing.toUpperCase();
+                }
+
+                if (keyThing == "durationInSec") {
+                    var header = headerRow.insertCell(-1);
+                    header.textContent = "DURATION";
                 }
 
 
@@ -53,13 +58,20 @@ if(typeof (Storage) !== "undefined")
 
                 for (var keyCode in saveObjectArray[object])
                 {
+                    if (keyCode == "durationInSec") {
+                        var cell = contentRow.insertCell(-1);
+                        var durInSec = saveObjectArray[object][keyCode];
+                        cell.textContent = durInSec.toString().toHHMMSS();
+                    }
+                    else 
                     //Duration in sec and keycode should not be shown
-                    if (keyCode != "durationInSec" && keyCode != "UUID")
+                    if (keyCode != "UUID")
                     {
                         //content
                         var cell = contentRow.insertCell(-1);
                         cell.textContent = saveObjectArray[object][keyCode];
                     }
+                    else
                     //adds UUID to tableRow
                     if (keyCode == "UUID")
                         contentRow.id = saveObjectArray[object][keyCode];
@@ -78,7 +90,7 @@ if(typeof (Storage) !== "undefined")
                 editTaskButton.id = "editTaskButton";
                 taskExportButton.href = "javascript:void(null);";
                 taskExportButton.id = "taskExportButton";
-                taskExportButton.innerHTML = '<i class="material-icons" style="color: black">call_made</i>'
+                taskExportButton.innerHTML = '<i class="material-icons" style="color: black">call_made</i>';
                 buttonCell.appendChild(deleteButton);
                 buttonCell.appendChild(editTaskButton);
                 buttonCell.appendChild(taskExportButton);

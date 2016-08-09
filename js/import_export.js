@@ -1,19 +1,6 @@
-var saveVersion = "1.3";
+var saveVersion = "1.4";
 var importButtonActive = true;
 
-
-function contains(array, object)
-{
-    var i = array.length;
-    while (i--)
-    {
-        if (array[i] == object)
-        {
-            return true;
-        }
-    }
-    return false;
-}
 
 $(document).ready(function()
 {
@@ -57,7 +44,7 @@ $(document).ready(function()
         }
     });
 
-    function convertLegacyJSON(json)
+    function generateUUIDforAllObjects(json)
     {
         for (var i = 0; i < json.saveObjectArray.length; i++)
         {
@@ -65,6 +52,29 @@ $(document).ready(function()
             json.saveObjectArray[i].UUID = generateUUID();
         }
         return json;
+    }
+
+    function removeMomentjsTImeFromAllObjects(json) {
+        for (var i = 0; i < json.saveObjectArray.length; i++) {
+            console.log(json.saveObjectArray[i].duration);
+            console.log(json.saveObjectArray[i]["duration"]);
+            delete json.saveObjectArray[i]["duration"];
+        }
+        return json;
+    }
+
+    function convertLegacyJSON(json) {
+        var saveVersion = json.saveVersion;
+        console.log(saveVersion);
+        switch (saveVersion) {
+            case "1.2":
+                return generateUUIDforAllObjects(json);
+            case "1.3":
+                return removeMomentjsTImeFromAllObjects(json);
+            default:
+                return json;
+        }
+
     }
 
 
@@ -248,7 +258,7 @@ $(document).ready(function()
                 try
                 {
                     var importString = JSON.parse(file);
-                    if (importString.saveVersion >= 1.2)
+                    if (importString.saveVersion >= saveVersion)
                     {
                         switch (importString.type)
                         {
@@ -266,10 +276,9 @@ $(document).ready(function()
                     }
                     else
                     {
-                        if (importString.saveVersion < 1.2)
-                        {
-                            setImport(convertLegacyJSON(importString));
-                        }
+
+                        setImport(convertLegacyJSON(importString));
+
                     }
                 }
                 catch(e)
