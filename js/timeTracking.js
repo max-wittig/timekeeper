@@ -63,7 +63,7 @@ if(typeof (Storage) !== "undefined")
                         var durInSec = saveObjectArray[object][keyCode];
                         cell.textContent = durInSec.toString().toHHMMSS();
                     }
-                    else 
+                    else
                     //Duration in sec and keycode should not be shown
                     if (keyCode != "UUID")
                     {
@@ -163,8 +163,9 @@ if(typeof (Storage) !== "undefined")
 					start = moment();
 
 					started = true;
+                    interval = setInterval(updateClock, 1000);
 
-                    if(typeof(Worker) !== "undefined")
+                    /*if(typeof(Worker) !== "undefined")
                     {
                         // Yes! Web worker support!
                         if(typeof(w) == "undefined")
@@ -192,7 +193,7 @@ if(typeof (Storage) !== "undefined")
                     {
                         // Sorry! No Web Worker support..
                         interval = setInterval(updateClock,1000);
-                    }
+                     }*/
 				}
 			}
 
@@ -255,7 +256,6 @@ if(typeof (Storage) !== "undefined")
 					endTime: endTime,
 					projectName: selectedProject,
 					taskName: selectedTask,
-					duration: totalDur,
                     durationInSec: durSec,
                     UUID: generateUUID()
 
