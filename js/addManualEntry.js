@@ -91,7 +91,6 @@ function insertData(startTime,endTime,projectName,taskName,duration, durationInS
         endTime: endTime,
         projectName: projectName,
         taskName: taskName,
-        duration: duration,
         durationInSec: durationInSec,
         UUID: generateUUID()
     };
