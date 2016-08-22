@@ -2,15 +2,19 @@ $(document).ready(function()
 {
     var saveProjectArray = JSON.parse(localStorage.getItem("saveProjectArray"));
     var checkBoxContainer = document.getElementById("checkBoxContainer");
+    var table = document.createElement("table");
+
 
     for(var i=0; i < saveProjectArray.length; i++)
     {
+        var tableRow = table.insertRow();
+        tableRow.id = "row_" + saveProjectArray[i].name;
         //for frozen attribute
         var p = document.createElement("p");
         var checkBox = document.createElement("input");
 
         checkBox.type = 'checkbox';
-        checkBox.id = saveProjectArray[i].name;
+        checkBox.id = "input_" + saveProjectArray[i].name;
 
         if(saveProjectArray[i].frozen != true)
         {
@@ -24,20 +28,24 @@ $(document).ready(function()
         label.htmlFor = saveProjectArray[i].name;
         label.textContent = saveProjectArray[i].name;
         p.appendChild(label);
-        checkBoxContainer.appendChild(p);
+        tableRow.appendChild(p);
+        table.appendChild(tableRow);
 
 
     }
 
+    checkBoxContainer.appendChild(table);
 
-    $('input').click(function()
+    $('tr p').click(function ()
     {
-        var checked = this.checked;
-
+        var input = this.getElementsByTagName("input")[0];
+        input.click();
+        var checked = input.checked;
 
        for(var i=0; i < saveProjectArray.length; i++)
        {
-           if(saveProjectArray[i].name.toString() == this.id.toString())
+           console.log(input.id.toString().split("_")[1]);
+           if (saveProjectArray[i].name.toString() == input.id.toString().split("_")[1])
            {
                if(checked == true)
                {
@@ -49,7 +57,7 @@ $(document).ready(function()
                    saveProjectArray[i].frozen = true;
                    //alert(this.checked);
                }
-
+               break;
            }
        }
 
