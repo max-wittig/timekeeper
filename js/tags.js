@@ -1,24 +1,38 @@
-$(document).ready(function ()
+function loadTags(saveProjectArray)
 {
-
-    var checkBoxContainer = document.getElementById("checkBoxContainer");
-    var div = checkBoxContainer.getElementsByTagName("div")[0];
-    var saveProjectArray = JSON.parse(localStorage.getItem("saveProjectArray"));
-    if (saveProjectArray == null)
-        saveProjectArray = [];
-
     for (var i = 0; i < saveProjectArray.length; i++)
     {
         var project = saveProjectArray[i];
         var tableRow = document.getElementById("row_" + project.name);
         var input = document.createElement("input");
         input.className = "tagsInput";
+
+        if (saveProjectArray[i].tags != undefined)
+        {
+            input.value = saveProjectArray[i].tags.toString();
+        }
+
+
         input.id = "text_" + project.name;
-        $(".tagsInput").materialtags();
         tableRow.appendChild(input);
-
-
     }
+
+    $(".tagsInput").materialtags();
+}
+
+
+
+$(document).ready(function ()
+{
+
+
+    var checkBoxContainer = document.getElementById("checkBoxContainer");
+    var div = checkBoxContainer.getElementsByTagName("div")[0];
+    var saveProjectArray = JSON.parse(localStorage.getItem("saveProjectArray"));
+    loadTags(saveProjectArray);
+    if (saveProjectArray == null)
+        saveProjectArray = [];
+
 
     function setProjectTags(projectName, tags)
     {
