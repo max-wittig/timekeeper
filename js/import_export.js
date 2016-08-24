@@ -2,7 +2,7 @@ var saveVersion = "1.4";
 var importButtonActive = true;
 
 
-$(document).ready(function()
+$(document).ready(function ()
 {
 
     function download(filename, text)
@@ -18,7 +18,7 @@ $(document).ready(function()
     }
 
 
-    $('#exportButton').click(function()
+    $('#exportButton').click(function ()
     {
 
         var everything =
@@ -36,9 +36,9 @@ $(document).ready(function()
     });
 
 
-    $('#importButton').click(function()
+    $('#importButton').click(function ()
     {
-        if(importButtonActive)
+        if (importButtonActive)
         {
             $('#fileImport').click();
         }
@@ -54,8 +54,10 @@ $(document).ready(function()
         return json;
     }
 
-    function removeMomentjsTImeFromAllObjects(json) {
-        for (var i = 0; i < json.saveObjectArray.length; i++) {
+    function removeMomentjsTImeFromAllObjects(json)
+    {
+        for (var i = 0; i < json.saveObjectArray.length; i++)
+        {
             console.log(json.saveObjectArray[i].duration);
             console.log(json.saveObjectArray[i]["duration"]);
             delete json.saveObjectArray[i]["duration"];
@@ -63,10 +65,12 @@ $(document).ready(function()
         return json;
     }
 
-    function convertLegacyJSON(json) {
+    function convertLegacyJSON(json)
+    {
         var saveVersion = json.saveVersion;
         console.log(saveVersion);
-        switch (saveVersion) {
+        switch (saveVersion)
+        {
             case "1.2":
                 return generateUUIDforAllObjects(json);
             case "1.3":
@@ -85,7 +89,7 @@ $(document).ready(function()
         var settingsObject = importString.settingsObject;
         localStorage.setItem("saveObjectArray", JSON.stringify(saveObjectArray));
         localStorage.setItem("saveProjectArray", JSON.stringify(saveProjectArray));
-        localStorage.setItem("settingsObject",JSON.stringify(settingsObject));
+        localStorage.setItem("settingsObject", JSON.stringify(settingsObject));
         sortTable(); //Input Data is sorted before page is reloaded!
         location.reload();
     }
@@ -248,17 +252,17 @@ $(document).ready(function()
         }
     }
 
-    $('#fileImport').change(function()
+    $('#fileImport').change(function ()
     {
         function processFile(e)
         {
-            var file = e.target.result,results;
+            var file = e.target.result, results;
             if (file && file.length)
             {
                 try
                 {
                     var importString = JSON.parse(file);
-                    if (importString.saveVersion >= saveVersion)
+                    if (importString.saveVersion >= 1.2)
                     {
                         switch (importString.type)
                         {
@@ -281,7 +285,7 @@ $(document).ready(function()
 
                     }
                 }
-                catch(e)
+                catch (e)
                 {
                     alert("File needs to be a JSON!\n" + e);
 
@@ -304,11 +308,6 @@ $(document).ready(function()
         }
 
     });
-
-
-
-
-
 
 
 });

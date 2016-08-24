@@ -8,7 +8,7 @@ $(document).ready(function()
     for(var i=0; i < saveProjectArray.length; i++)
     {
         var tableRow = table.insertRow();
-        tableRow.id = "row_" + saveProjectArray[i].name;
+        tableRow.id = "row__" + saveProjectArray[i].name;
         //for frozen attribute
         var p = document.createElement("p");
         var checkBox = document.createElement("input");

@@ -3,7 +3,7 @@ function loadTags(saveProjectArray)
     for (var i = 0; i < saveProjectArray.length; i++)
     {
         var project = saveProjectArray[i];
-        var tableRow = document.getElementById("row_" + project.name);
+        var tableRow = document.getElementById("row__" + project.name);
         var input = document.createElement("input");
         input.className = "tagsInput";
 
@@ -13,7 +13,7 @@ function loadTags(saveProjectArray)
         }
 
 
-        input.id = "text_" + project.name;
+        input.id = "text__" + project.name;
         tableRow.appendChild(input);
     }
 
@@ -50,14 +50,14 @@ $(document).ready(function ()
 
     $('input').on('itemAdded', function (event)
     {
-        var projectName = this.id.split("_")[1];
+        var projectName = this.id.split("__")[1];
         var items = $(this).materialtags('items');
         setProjectTags(projectName, items);
     });
 
     $('input').on('itemRemoved', function (event)
     {
-        var projectName = this.id.split("_")[1];
+        var projectName = this.id.split("__")[1];
         var items = $(this).materialtags('items');
         setProjectTags(projectName, items);
     });

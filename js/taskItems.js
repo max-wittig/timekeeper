@@ -22,7 +22,7 @@ function downloadFromTaskFromLocalStorage(UUID)
             {
                 var toDownload =
                 {
-                    saveVersion: 1.3,
+                    saveVersion: 1.4,
                     type: "SingleTask",
                     saveObject: saveObjectArray[i]
                 };
