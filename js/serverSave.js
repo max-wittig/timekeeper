@@ -1,4 +1,4 @@
-
+var serverURL = "http://127.0.0.1:3000/timekeeperServer.php";
 
 function insertLoginData(rememberLoginCheckBox)
 {
@@ -21,8 +21,6 @@ if(typeof (Storage) !== "undefined")
 
 	$(document).ready(function() 
 	{
-
-		var socket = io();
 		var rememberLoginCheckBox = $('#rememberLoginCheckBox');
 		insertLoginData(rememberLoginCheckBox);
 		$('#saveToServerButton').click(function()
@@ -43,15 +41,20 @@ if(typeof (Storage) !== "undefined")
 
 			var everything =
 			{
-				type: "Complete",
-				saveProjectArray: localStorage.getItem("saveProjectArray"),
-				saveObjectArray: localStorage.getItem("saveObjectArray"),
-				settingsObject: localStorage.getItem("settingsObject"),
-				saveVersion: saveVersion
+				saveProjectArray: JSON.parse(localStorage.getItem("saveProjectArray")),
+				saveObjectArray: JSON.parse(localStorage.getItem("saveObjectArray"))
 			};
 
-			socket.emit('saveTimeKeeperString', JSON.stringify(everything), username, password);
-			location.href = "../html/timekeeper.html";
+			$.post(serverURL,
+				{
+					"username": username,
+					"password": password,
+					"jsonString": JSON.stringify(everything),
+					"complete": true
+				}, function (data, error)
+				{
+					location.href = "../html/timekeeper.html";
+				});
 		});
 
 		rememberLoginCheckBox.click(function()
@@ -78,25 +81,27 @@ if(typeof (Storage) !== "undefined")
 				localStorage.setItem("secretData",JSON.stringify(secretData));
 			}
 
-			socket.emit('loadTimeKeeperString',username,password);
-		});
-
-		socket.on('loadTimeKeeperString', function (saveString)
-		{
-			var everything = JSON.parse(saveString.toString());
-			console.log(everything);
-			if (everything != null && everything != undefined)
-			{
-				localStorage.setItem('saveObjectArray', everything.saveObjectArray);
-				localStorage.setItem('saveProjectArray', everything.saveProjectArray);
-				location.href = "../html/timekeeper.html";
-			}
-		});
-
-		socket.on('loadTimeKeeperStringFail',function()
-		{
-			alert("Wrong data!");
-
+			$.post(serverURL,
+				{
+					"username": username,
+					"password": password
+				}, function (data, error)
+				{
+					try
+					{
+						var json = JSON.parse(data);
+						if (json != null && json != undefined)
+						{
+							localStorage.setItem('saveObjectArray', JSON.stringify(json.saveObjectArray));
+							localStorage.setItem('saveProjectArray', JSON.stringify(json.saveProjectArray));
+							location.href = "../html/timekeeper.html";
+						}
+					}
+					catch (e)
+					{
+						alert("Login failed");
+					}
+				});
 		});
 
 	});
