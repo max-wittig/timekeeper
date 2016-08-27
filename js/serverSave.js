@@ -1,4 +1,4 @@
-var serverURL = "http://127.0.0.1:3000/timekeeperServer.php";
+var serverURL = "../../timekeeperServer/timekeeperServer.php";
 
 function insertLoginData(rememberLoginCheckBox)
 {
@@ -15,12 +15,21 @@ function insertLoginData(rememberLoginCheckBox)
 		}
 }
 
+function loadServerHost()
+{
+	if (localStorage.getItem("serverHost") != null)
+	{
+		serverURL = localStorage.getItem("serverHost");
+	}
+
+}
 
 if(typeof (Storage) !== "undefined")
 {
 
 	$(document).ready(function() 
 	{
+		loadServerHost();
 		var rememberLoginCheckBox = $('#rememberLoginCheckBox');
 		insertLoginData(rememberLoginCheckBox);
 		$('#saveToServerButton').click(function()

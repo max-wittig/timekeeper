@@ -26,6 +26,7 @@
     <script src="../js/setProjectFrozen.js"></script>
     <script src="../js/import_export.js"></script>
     <script src="../js/tags.js"></script>
+    <script src="../js/settings.js"></script>
 </head>
 <body>
 <header>
@@ -88,12 +89,29 @@
 <div class="row">
     <div class="col s12 m6 push-m3 col l6 push-l5">
         <h3>Manage projects</h3>
-
     </div>
 </div>
 <div class="row">
     <div class="col s12 m6 push-m3 col l6">
         <p id="checkBoxContainer"></p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col s12 m6 push-m3 col l6 push-l5">
+        <h5>General</h5>
+    </div>
+</div>
+<div class="row">
+    <div class="col s6 push-s3">
+        <input id="serverHostInput" type="text">
+        <label for="serverHostInput">Server URL</label>
+    </div>
+    <div class="col s2 push-s3">
+        <a id="serverHostButton" class="waves-effect waves-light btn blue-grey darken-1">Set</a>
+    </div>
+    <div class="col s1 push-s3">
+        <a id="restoreDefaultServerButton">Restore</a>
     </div>
 </div>
 
