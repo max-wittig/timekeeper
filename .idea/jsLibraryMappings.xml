@@ -3,6 +3,7 @@
   <component name="JavaScriptLibraryMappings">
     <file url="file://$PROJECT_DIR$/timekeeperServer.js" libraries="{ECMAScript 6}" />
     <file url="PROJECT" libraries="{node-DefinitelyTyped}" />
+    <includedPredefinedLibrary name="ECMAScript 6" />
     <includedPredefinedLibrary name="Node.js Core" />
   </component>
 </project>

@@ -1,5 +1,3 @@
-
-
 var started = false;
 var stopButtonActive = false;
 var startButtonActive = true;
@@ -7,15 +5,15 @@ var interval;
 var w;
 
 
-if(typeof (Storage) !== "undefined")
+if (typeof (Storage) !== "undefined")
 {
 
     function showTable()
     {
         var logTable = document.getElementById('logTable');
         var saveObjectArray = JSON.parse(localStorage.getItem("saveObjectArray"));
-
-        if(saveObjectArray == null || saveObjectArray == undefined)
+        let keys = ["startTime", "endTime", "projectName", "taskName", "durationInSec"];
+        if (saveObjectArray == null || saveObjectArray == undefined)
         {
             console.log("No local storage for saveObjectArray!");
         }
@@ -27,7 +25,7 @@ if(typeof (Storage) !== "undefined")
             //Table Head
             var headerHead = logTable.createTHead();
             var headerRow = headerHead.insertRow(0);
-            let keys = ["startTime", "endTime", "projectName", "taskName", "durationInSec"];
+
             for (let i = 0; i < keys.length; i++)
             {
                 let attribute = keys[i];
@@ -54,29 +52,29 @@ if(typeof (Storage) !== "undefined")
             var tableBody = logTable.createTBody();
 
             //loops though every object in saveObjectArray and prints out table rows
-            for(var object in saveObjectArray)
+            for (var object in saveObjectArray)
             {
                 var contentRow = tableBody.insertRow(0);
 
-                for (var keyCode in saveObjectArray[object])
+                for (let i = 0; i < keys.length; i++)
                 {
-                    if (keyCode == "durationInSec") {
-                        var cell = contentRow.insertCell(-1);
-                        var durInSec = saveObjectArray[object][keyCode];
-                        cell.textContent = durInSec.toString().toHHMMSS();
-                    }
-                    else
-                    //Duration in sec and keycode should not be shown
-                    if (keyCode != "UUID")
+                    let attribute = keys[i];
+                    let key = saveObjectArray[object];
+                    let value = saveObjectArray[object][attribute];
+                    switch (attribute)
                     {
-                        //content
-                        var cell = contentRow.insertCell(-1);
-                        cell.textContent = saveObjectArray[object][keyCode];
+                        case "durationInSec":
+                            let duration_cell = contentRow.insertCell(-1);
+                            duration_cell.textContent = value.toString().toHHMMSS();
+                            console.log(value.toString().toHHMMSS());
+                            break;
+                        case "UUID":
+                            contentRow.id = value;
+                            break;
+                        default:
+                            let default_cell = contentRow.insertCell(-1);
+                            default_cell.textContent = value;
                     }
-                    else
-                    //adds UUID to tableRow
-                    if (keyCode == "UUID")
-                        contentRow.id = saveObjectArray[object][keyCode];
                 }
 
                 //creates button to manage the deleting...managing of a project
@@ -116,124 +114,124 @@ if(typeof (Storage) !== "undefined")
 
         showTable();
 
-        startButton.click(function()
+        startButton.click(function ()
         {
 
-			if(startButtonActive)
-			{
-				
-
-				selectedTask = $('#taskSelect option:selected').text();
-				selectedProject = $('#projectSelect option:selected').text();
+            if (startButtonActive)
+            {
 
 
-				if(selectedProject == "" || selectedProject == " " || selectedProject == undefined || selectedTask == " " || selectedTask == "" || selectedTask == undefined || selectedProject == "undefined")
-				{
-					alert("Please select a project and a task to continue!");
+                selectedTask = $('#taskSelect option:selected').text();
+                selectedProject = $('#projectSelect option:selected').text();
 
-				}
-				else
-				{
-					//disable select
-					$('#taskSelect').prop('disabled', 'disabled');
-					$('#projectSelect').prop('disabled', 'disabled');
-					$('select').material_select();
-					
-					startButtonActive = false;
-					stopButtonActive = true;
-					importButtonActive = false;
 
-					//This be the normal solution but startButton is not a button it's an <a> and we're using http://materializecss.com/buttons.html
-					//startButton.disabled = true;
-					//startButton.text = "Task running...";
-					startButton.attr('class','btn disabled');
-					//startButton.text('Runs...');
-					stopButton.attr('class','waves-effect waves-light btn blue-grey darken-1');
-					//$('#importButton').attr('class','disabled');
+                if (selectedProject == "" || selectedProject == " " || selectedProject == undefined || selectedTask == " " || selectedTask == "" || selectedTask == undefined || selectedProject == "undefined")
+                {
+                    alert("Please select a project and a task to continue!");
+
+                }
+                else
+                {
+                    //disable select
+                    $('#taskSelect').prop('disabled', 'disabled');
+                    $('#projectSelect').prop('disabled', 'disabled');
+                    $('select').material_select();
+
+                    startButtonActive = false;
+                    stopButtonActive = true;
+                    importButtonActive = false;
+
+                    //This be the normal solution but startButton is not a button it's an <a> and we're using http://materializecss.com/buttons.html
+                    //startButton.disabled = true;
+                    //startButton.text = "Task running...";
+                    startButton.attr('class', 'btn disabled');
+                    //startButton.text('Runs...');
+                    stopButton.attr('class', 'waves-effect waves-light btn blue-grey darken-1');
+                    //$('#importButton').attr('class','disabled');
 
                     //for browser which do not support webWorkers
                     function updateClock()
                     {
-                        var durSec = moment().diff(start,'seconds');
+                        var durSec = moment().diff(start, 'seconds');
                         var totalDur = durSec.toString().toHHMMSS();
                         startButton.text(totalDur);
 
                     }
 
                     //records time
-					startTime = moment().format("DD.MM.YYYY - HH:mm:ss");
-					start = moment();
+                    startTime = moment().format("DD.MM.YYYY - HH:mm:ss");
+                    start = moment();
 
-					started = true;
+                    started = true;
                     interval = setInterval(updateClock, 1000);
 
                     /*if(typeof(Worker) !== "undefined")
-                    {
-                        // Yes! Web worker support!
-                        if(typeof(w) == "undefined")
-                        {
-							try //if site runs local webWorkers are not supported!
-							{
-								w = new Worker("webworker.js");
-								w.postMessage(JSON.stringify(start));
-								var startTestButton = document.getElementById('startButton');
-								w.addEventListener('message', function(e)
-								{
-									startTestButton.textContent = e.data;
-								}, false);
-								
-							}
-							catch(e)
-							{
-								// Sorry! No Web Worker support..
-								interval = setInterval(updateClock,1000);
-							}
-                           
-                        }
-                    }
-                    else
-                    {
-                        // Sorry! No Web Worker support..
-                        interval = setInterval(updateClock,1000);
+                     {
+                     // Yes! Web worker support!
+                     if(typeof(w) == "undefined")
+                     {
+                     try //if site runs local webWorkers are not supported!
+                     {
+                     w = new Worker("webworker.js");
+                     w.postMessage(JSON.stringify(start));
+                     var startTestButton = document.getElementById('startButton');
+                     w.addEventListener('message', function(e)
+                     {
+                     startTestButton.textContent = e.data;
+                     }, false);
+
+                     }
+                     catch(e)
+                     {
+                     // Sorry! No Web Worker support..
+                     interval = setInterval(updateClock,1000);
+                     }
+
+                     }
+                     }
+                     else
+                     {
+                     // Sorry! No Web Worker support..
+                     interval = setInterval(updateClock,1000);
                      }*/
-				}
-			}
+                }
+            }
 
 
         });
 
-        stopButton.click(function()
+        stopButton.click(function ()
         {
 
-			if(stopButtonActive)
-			{
+            if (stopButtonActive)
+            {
 
-				//stop the clock, if webworker is supported
-                if(typeof(w) != "undefined")
+                //stop the clock, if webworker is supported
+                if (typeof(w) != "undefined")
                 {
                     w.terminate();
                     w = undefined;
                 }
 
                 //stop the clock, when no webworker support
-                if(interval != undefined && interval != null)
-                clearInterval(interval);
+                if (interval != undefined && interval != null)
+                    clearInterval(interval);
 
-				//enable select
-				$('#projectSelect').prop('disabled', '');
-				$('projectSelect').material_select();
+                //enable select
+                $('#projectSelect').prop('disabled', '');
+                $('projectSelect').material_select();
 
-				stopButtonActive = false;
-				startButtonActive = true;
-				importButtonActive = true;
+                stopButtonActive = false;
+                startButtonActive = true;
+                importButtonActive = true;
 
-				//enable select
-				$('#taskSelect').prop('disabled', '');
-				$('select').material_select();
+                //enable select
+                $('#taskSelect').prop('disabled', '');
+                $('select').material_select();
 
-				//activate Button again
-				startButton.attr('class','waves-effect waves-light btn blue-grey darken-1');
-				//$('#importButton').attr('class','waves-effect waves-light btn');
+                //activate Button again
+                startButton.attr('class', 'waves-effect waves-light btn blue-grey darken-1');
+                //$('#importButton').attr('class','waves-effect waves-light btn');
 
                 //Node Way of doing things
                 var startButtonTest = document.getElementById("startButton");
@@ -243,43 +241,43 @@ if(typeof (Storage) !== "undefined")
                 startButtonTest.textContent = "";
                 startButtonTest.appendChild(iTag);
 
-				stopButton.attr('class','btn disabled');
+                stopButton.attr('class', 'btn disabled');
 
-				endTime = moment().format("DD.MM.YYYY - HH:mm:ss");
-				end = moment();
-				started = false;
-				var durSec = end.diff(start,'seconds');
-				var totalDur = durSec.toString().toHHMMSS();
+                endTime = moment().format("DD.MM.YYYY - HH:mm:ss");
+                end = moment();
+                started = false;
+                var durSec = end.diff(start, 'seconds');
+                var totalDur = durSec.toString().toHHMMSS();
 
-				//save logic
-				var saveObject =
-				{
-					startTime: startTime,
-					endTime: endTime,
-					projectName: selectedProject,
-					taskName: selectedTask,
+                //save logic
+                var saveObject =
+                {
+                    startTime: startTime,
+                    endTime: endTime,
+                    projectName: selectedProject,
+                    taskName: selectedTask,
                     durationInSec: durSec,
                     UUID: generateUUID()
 
-				};
+                };
 
-				//gets object out of the array
-				var saveObjectArray = JSON.parse(localStorage.getItem("saveObjectArray"));
+                //gets object out of the array
+                var saveObjectArray = JSON.parse(localStorage.getItem("saveObjectArray"));
 
-				//if no array in local storage --> create array
-				if(saveObjectArray == null)
-				saveObjectArray = [];
+                //if no array in local storage --> create array
+                if (saveObjectArray == null)
+                    saveObjectArray = [];
 
-				//Push object in array
-				saveObjectArray.push(saveObject);
+                //Push object in array
+                saveObjectArray.push(saveObject);
 
-				//save objectarray with saveObjects in local storage
-				localStorage.setItem("saveObjectArray",JSON.stringify(saveObjectArray));
+                //save objectarray with saveObjects in local storage
+                localStorage.setItem("saveObjectArray", JSON.stringify(saveObjectArray));
 
-				showTable();
+                showTable();
 
-			}
-		});
+            }
+        });
 
     });
 }
