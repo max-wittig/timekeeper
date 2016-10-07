@@ -27,21 +27,23 @@ if(typeof (Storage) !== "undefined")
             //Table Head
             var headerHead = logTable.createTHead();
             var headerRow = headerHead.insertRow(0);
-            for(var keyThing in saveObjectArray[0])
+            let keys = ["startTime", "endTime", "projectName", "taskName", "durationInSec"];
+            for (let i = 0; i < keys.length; i++)
             {
-                //Duration in sec is not important to show
-                if (keyThing != "UUID" && keyThing != "durationInSec")
+                let attribute = keys[i];
+                switch (attribute)
                 {
-                    var header = headerRow.insertCell(-1);
-                    header.textContent = keyThing.toUpperCase();
+                    case "durationInSec":
+                        let duration_header = headerRow.insertCell(-1);
+                        duration_header.textContent = "DURATION";
+                        break;
+                    case "UUID":
+                        break;
+                    default:
+                        let default_header = headerRow.insertCell(-1);
+                        default_header.textContent = attribute.toUpperCase();
+                        break;
                 }
-
-                if (keyThing == "durationInSec") {
-                    var header = headerRow.insertCell(-1);
-                    header.textContent = "DURATION";
-                }
-
-
             }
 
             var deleteCell = headerRow.insertCell(-1);
