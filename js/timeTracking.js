@@ -12,7 +12,7 @@ if (typeof (Storage) !== "undefined")
     {
         var logTable = document.getElementById('logTable');
         var saveObjectArray = JSON.parse(localStorage.getItem("saveObjectArray"));
-        let keys = ["startTime", "endTime", "projectName", "taskName", "durationInSec"];
+        let keys = ["startTime", "endTime", "projectName", "taskName", "durationInSec", "UUID"];
         if (saveObjectArray == null || saveObjectArray == undefined)
         {
             console.log("No local storage for saveObjectArray!");
@@ -66,7 +66,6 @@ if (typeof (Storage) !== "undefined")
                         case "durationInSec":
                             let duration_cell = contentRow.insertCell(-1);
                             duration_cell.textContent = value.toString().toHHMMSS();
-                            console.log(value.toString().toHHMMSS());
                             break;
                         case "UUID":
                             contentRow.id = value;
@@ -119,11 +118,8 @@ if (typeof (Storage) !== "undefined")
 
             if (startButtonActive)
             {
-
-
                 selectedTask = $('#taskSelect option:selected').text();
                 selectedProject = $('#projectSelect option:selected').text();
-
 
                 if (selectedProject == "" || selectedProject == " " || selectedProject == undefined || selectedTask == " " || selectedTask == "" || selectedTask == undefined || selectedProject == "undefined")
                 {
@@ -164,36 +160,6 @@ if (typeof (Storage) !== "undefined")
 
                     started = true;
                     interval = setInterval(updateClock, 1000);
-
-                    /*if(typeof(Worker) !== "undefined")
-                     {
-                     // Yes! Web worker support!
-                     if(typeof(w) == "undefined")
-                     {
-                     try //if site runs local webWorkers are not supported!
-                     {
-                     w = new Worker("webworker.js");
-                     w.postMessage(JSON.stringify(start));
-                     var startTestButton = document.getElementById('startButton');
-                     w.addEventListener('message', function(e)
-                     {
-                     startTestButton.textContent = e.data;
-                     }, false);
-
-                     }
-                     catch(e)
-                     {
-                     // Sorry! No Web Worker support..
-                     interval = setInterval(updateClock,1000);
-                     }
-
-                     }
-                     }
-                     else
-                     {
-                     // Sorry! No Web Worker support..
-                     interval = setInterval(updateClock,1000);
-                     }*/
                 }
             }
 

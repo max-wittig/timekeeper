@@ -26,6 +26,7 @@ function downloadFromTaskFromLocalStorage(UUID)
                     type: "SingleTask",
                     saveObject: saveObjectArray[i]
                 };
+                console.log("Test");
                 download(saveObjectArray[i].projectName + " - " + saveObjectArray[i].taskName + ".json", JSON.stringify(toDownload));
             }
         }

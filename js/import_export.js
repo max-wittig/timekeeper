@@ -68,7 +68,6 @@ $(document).ready(function ()
     function convertLegacyJSON(json)
     {
         var saveVersion = json.saveVersion;
-        console.log(saveVersion);
         switch (saveVersion)
         {
             case "1.2":
