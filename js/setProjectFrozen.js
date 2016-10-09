@@ -4,7 +4,8 @@ $(document).ready(function()
     var checkBoxContainer = document.getElementById("checkBoxContainer");
     var table = document.createElement("table");
 
-
+    if (saveProjectArray == null)
+        saveProjectArray = [];
     for(var i=0; i < saveProjectArray.length; i++)
     {
         var tableRow = table.insertRow();

@@ -1,5 +1,7 @@
 function loadTags(saveProjectArray)
 {
+    if (saveProjectArray == null)
+        saveProjectArray = [];
     for (var i = 0; i < saveProjectArray.length; i++)
     {
         var project = saveProjectArray[i];
