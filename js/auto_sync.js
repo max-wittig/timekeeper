@@ -10,22 +10,49 @@ function loadServerHost()
 
 }
 
+var hashFunction = function getCurrentHash(username, callback)
+{
+    $.post(serverURL,
+        {
+            "username": username,
+            "hash": "true"
+        }, function (data, error)
+        {
+            callback(data);
+        });
+};
+
+let username = "";
+var password = "";
 
 $(document).ready(function ()
 {
-    loadServerHost();
-    var d = new Date();
-    var n = Math.floor(d.getTime() / 1000);
-    let lastRecoredSyncTime = (localStorage.getItem("lastSyncTime"));
-    if (localStorage.getItem("autoSync") == "true" && (lastRecoredSyncTime == null || (n - lastRecoredSyncTime) > 10))
+    var secretData = JSON.parse(localStorage.getItem("secretData"));
+    if (secretData != null)
     {
-        localStorage.setItem("lastSyncTime", n);
-        console.log("Synced with server");
-        let secretData = JSON.parse(localStorage.getItem("secretData"));
-        if (secretData != null)
+        username = secretData["username"];
+        password = secretData["password"];
+    }
+    else
+    {
+        return;
+    }
+    loadServerHost();
+    let usernameHash = localStorage.getItem("hash");
+    hashFunction(username, function (data)
+    {
+        let currentHash = data;
+        console.log(usernameHash);
+        console.log(currentHash);
+        var d = new Date();
+        var n = Math.floor(d.getTime() / 1000);
+        let lastRecoredSyncTime = (localStorage.getItem("lastSyncTime"));
+        if (localStorage.getItem("autoSync") == "true" && (lastRecoredSyncTime == null || (n - lastRecoredSyncTime) > 10) && usernameHash != currentHash)
         {
-            let username = secretData["username"];
-            let password = secretData["password"];
+            localStorage.setItem("hash", currentHash);
+            localStorage.setItem("lastSyncTime", n);
+            console.log("Synced with server");
+
             $.post(serverURL,
                 {
                     "username": username,
@@ -47,6 +74,8 @@ $(document).ready(function ()
                         alert("Login failed");
                     }
                 });
+
         }
-    }
+    });
+
 });
